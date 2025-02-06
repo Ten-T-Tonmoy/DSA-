@@ -53,7 +53,7 @@ class Stack{
         }
 
         cout<<"The Stack values are : ";
-        for(int i=0;i<=top;i++){
+        for(int i=top;i>=0;i--){
             cout<<arr[i]<<" ";
         }
         cout<<endl;
