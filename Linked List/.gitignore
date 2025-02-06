@@ -1,1 +1,21 @@
-applying.exe
+# Ignore compiled binaries
+*.exe
+*.out
+*.o
+*.obj
+*.dll
+*.so
+
+# Ignore build directories
+bin/
+build/
+
+# Ignore editor and IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Ignore CMake and Makefile generated files
+CMakeFiles/
+CMakeCache.txt
+Makefile
