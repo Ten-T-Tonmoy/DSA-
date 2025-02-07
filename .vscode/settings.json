@@ -3,6 +3,7 @@
     "*.html": "html",
     "*.css": "css",
     "*.js": "javascript",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "regex": "cpp"
   }
 }
