@@ -16,7 +16,7 @@ class Queue{
         //cause that shit was within private
         data =new int[storage];
         front=0;
-        rear=-1;
+        rear=0;
         size=0;
 
     }
@@ -25,30 +25,40 @@ class Queue{
         delete[] data;
     }
     void enqueue(int val){
-        if(isFull){
+        if(isFull()){
             cout<<"Shiii Queue Overflowd!";
+            cout<<endl;
+
             return;
         }
-        data[size]=val;
+        
+        data[rear]=val;
+        rear++;
         size++;
     }
 
     void display(){
-        if(isEmpty){
+        if(isEmpty()){
             cout<<"Shiii the Queue Dry af";
+            cout<<endl;
+
             return;
         }
         cout<<"The Queue items are : ";
-        for(int i=0;i<size;i++){
+        for(int i=front;i<=rear;i++){
             cout<<data[i]<<" ";
         }
+        cout<<endl;
 
     }
     void dequeue(){
-        if(isEmpty){
+        if(isEmpty()){
             cout<<"Shiii the Queue Dry af";
+            cout<<endl;
+
             return;
         }
+        front++;
 
 
     }
@@ -60,16 +70,20 @@ class Queue{
         return false;
 
     }
-    int front(){
-        if(isEmpty){
+    int getfront(){
+        if(isEmpty()){
             cout<<"Shiii the Queue Dry af";
-            return;
+            cout<<endl;
+
+            return -1;
         }
         return data[front];
     }
-    int last(){
-        if(isEmpty){
+    int getlast(){
+        if(isEmpty()){
             cout<<"Shiii the Queue Dry af";
+            cout<<endl;
+
             return -1;
         }
         return data[rear];
@@ -85,8 +99,8 @@ int main(){
     q.enqueue(5);
     q.enqueue(6);
     q.dequeue();
-
-
+    q.display();
+    cout<<"The rear element is : "<<q.getfront();
 
 
     return 0;
