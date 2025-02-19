@@ -11,10 +11,10 @@ class BinaryTree{
 
     BinaryTree(int len){
         storage=len;
-        tree= new int[storage];
+        tree= new int[storage+1];//for 1 based indexing
         //dynamic array making
         size=0;
-        for(int i=0;i<storage;i++){
+        for(int i=0;i<=storage;i++){
             tree[i]=-1;
         }
     }
