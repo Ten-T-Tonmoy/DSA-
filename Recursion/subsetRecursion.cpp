@@ -16,6 +16,18 @@ void subSets(vector <int> given,vector<int> &sub,int i){
     subSets(given,sub,i+1);
     
     // 1 2 3 4 5
+    // 1 2 3 4
+        // 1 2 3 5
+        // 1 2 3
+    
+    // 1 2 3
+        // 1 2 4 5
+        // 1 2 4
+            // 1 2 5
+    // 1 2
+        // 1 3 4 5
+        // 1 3 4
+
 
     sub.pop_back();
     subSets(given,sub,i+1);
