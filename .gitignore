@@ -1,0 +1,38 @@
+# C++ build files
+*.o
+*.obj
+*.a
+*.out
+*.exe
+*.gch
+*.pch
+*.pdb
+*.idb
+*.lib
+*.dll
+*.so
+*.dylib
+*.debug/
+
+# VSCode settings
+.vscode/
+
+# C++ Makefile-based builds
+Makefile
+CMakeLists.txt.user
+CMakeCache.txt
+cmake-build-*/
+
+# Backup files
+*~
+*.swp
+*.bak
+*.tmp
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDEs and other environments
+.idea/
+.vscode/

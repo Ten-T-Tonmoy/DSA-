@@ -87,6 +87,35 @@ void selectionSort()
        
     }
 
+void quickSort(vector<int> &arr,int low,int high){
+    // idea: if all ele before are smol
+    //and after are big then shit is sorted
+    //using partitioning procedure
+    //one and beg => find if bigger than pivot  i
+    // one at end => find if smaller than pivot j
+    //if i>j then pivot will go in place of j
+
+   
+
+}
+int partition(vector<int> &arr,int low,int high){
+    int pivot=arr[low];
+    int i=low,j=high;
+    do{ 
+        //damn do while loops cool
+        do{
+            i++;
+        }while(arr[i]<=pivot);
+        do{
+            j--;
+        }while(arr[j]>=pivot);
+        if(i<j)
+            swap(arr[i],arr[j]);
+
+    }while(i<j);
+    swap(arr[low],arr[j]);
+    return j;
+}
 int main()
 {
 ios_base::sync_with_stdio(false);
