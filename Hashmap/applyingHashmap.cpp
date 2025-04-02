@@ -3,7 +3,7 @@ using namespace std;
 
 /**
  * it has =>=>
- * put(key,val) 
+ * put(key,val)
  * get(key):val
  * remove(key)
  * contains(key)
@@ -15,7 +15,7 @@ class MyHashMap
 private:
     static const int Size = 100;
     vector<list<pair<int, int>>> hashtable;
-    int mapSize=0;
+    int mapSize = 0;
 
     int hash(int key)
     {
@@ -30,12 +30,12 @@ public:
     {
         int idx = hash(key);
         // structured binding only with pair and tuple works
-        for (auto &[k, v] : hashtable[idx])
+        for (auto &p : hashtable[idx])
         {
             // since modifying u gotta do it
-            if (k == key)
+            if (p.first == key)
             {
-                v = value;
+                p.second = value;
                 mapSize++;
                 return;
             }
@@ -48,10 +48,10 @@ public:
     int get(int key)
     {
         int idx = hash(key);
-        for (auto &[k, v] : hashtable[idx])
+        for (auto &p : hashtable[idx])
         {
-            if (k == key)
-                return v;
+            if (p.first == key)
+                return p.second;
         }
         return -1;
     }
@@ -73,27 +73,40 @@ public:
         }
     }
 
-    bool contains(int key){
-        int idx=hash(key);
-        for(auto [k,v]:hashtable[idx]){
-            if(k==key)
+    bool contains(int key)
+    {
+        int idx = hash(key);
+        for (auto p : hashtable[idx])
+        {
+            if (p.first == key)
                 return true;
         }
         return false;
     }
 
-    int sizeOf(){
-        if(mapSize<1)
-            return -1;
-        return mapSize;
-
-    }
-    void printMap(){
-        for(auto bucket:hashtable){
-            
+    void sizeOf()
+    {
+        if (this->mapSize < 1)
+        {
+            cout << "The map is empty" << endl;
+            return;
         }
-        for(auto [k,v]:hashtable){
-
+        cout << "The size of the map is :(total entries) " << this->mapSize << endl;
+    }
+    void printMap()
+    {
+        if (this->mapSize < 1)
+        {
+            cout << " Bro its fricking empty " << endl;
+            return;
+        }
+        cout << "The map shown below : " << endl;
+        for (auto bucket : hashtable)
+        {
+            for (auto p : bucket)
+            {
+                cout << "{ Key : " << p.first << ", Value : " << p.second << " }" << endl;
+            }
         }
     }
 };
@@ -103,8 +116,13 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     MyHashMap map;
-    map.put(2,21);
-    map.put(6,73);
-    map.put(24,12);
+    map.put(2, 21);
+    map.put(6, 73);
+    map.put(24, 12);
+    map.remove(6);
+    map.put(1215, 24);
+    map.printMap();
+    cout << "The key 24 exists :" << map.contains(24) << endl;
+    map.sizeOf();
     return 0;
 }

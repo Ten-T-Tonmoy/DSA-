@@ -87,17 +87,7 @@ void selectionSort()
        
     }
 
-void quickSort(vector<int> &arr,int low,int high){
-    // idea: if all ele before are smol
-    //and after are big then shit is sorted
-    //using partitioning procedure
-    //one and beg => find if bigger than pivot  i
-    // one at end => find if smaller than pivot j
-    //if i>j then pivot will go in place of j
 
-   
-
-}
 int partition(vector<int> &arr,int low,int high){
     int pivot=arr[low];
     int i=low,j=high;
