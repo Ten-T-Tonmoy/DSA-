@@ -16,7 +16,7 @@ void subSets(vector <int> given,vector<int> &sub,int i){
     subSets(given,sub,i+1);
     
     // 1 2 3 4 5
-    // 1 2 3 4
+    // 1 2 3N 4
         // 1 2 3 5
         // 1 2 3
     
