@@ -16,29 +16,29 @@ using namespace std;
 class Graph
 {
 private:
-    int numOfVertices;
-    vector<vector<int>> adjMatrix;
+    int V;
+    vector<vector<pair<int, int>>> adjacencyList;
 
 public:
-    Graph(int VerticesNum)
+    Graph(int vertices)
     {
-        this->numOfVertices = VerticesNum;
-        // making necessary matrix
-        adjMatrix.resize(numOfVertices, vector<int>(numOfVertices, 0));
+        this->V = vertices;
+        adjacencyList.resize(V);
     }
 
     void AddEdge(int source, int destination, int weight = 1)
     {
-        adjMatrix[source][destination] = weight;
+        adjacencyList[source].push_back({destination, weight});
     }
+
     void GraphPrinter()
     {
-        cout << "The graph given below";
-        for (int i = 0; i < numOfVertices; i++)
+        for (int i = 0; i < V; i++)
         {
-            for (int j = 0; j < numOfVertices; j++)
+            cout << "Vertex " << i << " -> ";
+            for (auto &vertex : adjacencyList[i])
             {
-                cout << adjMatrix[i][j] << " ";
+                cout << vertex.first << "(" << vertex.second << ") ";
             }
             cout << endl;
         }
@@ -46,14 +46,32 @@ public:
 
     //------------------BFS-------------------------------------
 
-    void BFS(int i)
+    void BFS(int startIndex)
     {
         // will take starting vertex
-        vector<int> visited(numOfVertices, 0);
+        vector<bool> visited(V, false);
         queue<int> q;
 
-        while(){
-            u
+        visited[startIndex] = true;
+        q.push(startIndex);
+        cout << "BFS sequence : ";
+
+        while (!q.empty())
+        {
+            // oh we getting vertex and idx or num
+            int currentVertex = q.front();
+            q.pop();
+            cout << currentVertex << " ";
+
+            for (const auto &edge : adjacencyList[currentVertex])
+            {
+                int neighbor = edge.first;
+                if (!visited[neighbor])
+                {
+                    visited[neighbor] = true;
+                    q.push(neighbor);
+                }
+            }
         }
     }
 };
@@ -61,5 +79,22 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    Graph testGraph(11);
+    testGraph.AddEdge(2, 4, 6);
+    testGraph.AddEdge(4, 5, 1);
+    testGraph.AddEdge(0, 5, 2);
+    testGraph.AddEdge(5, 6, 1);
+    testGraph.AddEdge(6, 7, 7);
+    testGraph.AddEdge(7, 8, 3);
+    testGraph.AddEdge(8, 9, 5);
+    testGraph.AddEdge(9, 10, 4);
+    testGraph.AddEdge(1, 2, 3);
+    testGraph.AddEdge(2, 1, 6);
+    testGraph.AddEdge(3, 2, 6);
+    testGraph.AddEdge(3, 4, 4);
+    testGraph.AddEdge(3, 1, 6);
+    testGraph.AddEdge(4, 1, 9);
+
+    testGraph.BFS(1);
     return 0;
 }
