@@ -1,0 +1,3 @@
+- adjaceny mat
+  - for undirected count either way
+  - for directed count one way
