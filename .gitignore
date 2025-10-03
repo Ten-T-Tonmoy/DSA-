@@ -16,6 +16,7 @@
 
 # VSCode settings
 .vscode/
+Bitwise/
 
 # C++ Makefile-based builds
 Makefile
