@@ -27,19 +27,18 @@ void showAsTree(const vector<int> &heapNec)
 void heapifyDown(int i, vector<int> &heap, int n)
 {
     // /arr = [4, 10, 3, 5, 1]
-    int largest = i;
+    int smallest = i;
     int left = 2 * i + 1, right = 2 * i + 2;
 
-    if (right < n && heap[largest] < heap[right])
-        largest = right;
-    if (left < n && heap[largest] < heap[left])
-        largest = left;
+    if (right < n && heap[smallest] > heap[right])
+        smallest = right;
+    if (left < n && heap[smallest] > heap[left])
+        smallest = left;
 
-    if (largest != i)
+    if (smallest != i)
     {
-        swap(heap[largest], heap[i]);
-        heapifyDown(largest, heap, n);
-        
+        swap(heap[smallest], heap[i]);
+        heapifyDown(smallest, heap, n);
     }
 }
 
@@ -58,11 +57,9 @@ void heapSort(vector<int> arr)
 {
     int n = arr.size();
 
-    for (int i = n / 2 - 1; i >= 0; i--)
-    {
+    for (int i = n / 2 - 1; i > 0; i--)
         heapifyDown(i, arr, n);
-        // heap making inserting?
-    }
+
     cout << "Initial Heap : " << endl;
     showAsTree(arr);
 

@@ -100,5 +100,5 @@ These are the topics I plan to tackle once I’m confident with the intermediate
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Ten-T-Tonmoy/DSA-.git
+   git clone https://github.com/Ten-T-Tonmoy/DSGASM.git
    ```
