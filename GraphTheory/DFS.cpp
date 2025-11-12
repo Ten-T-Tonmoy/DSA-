@@ -54,7 +54,7 @@ public:
         for (const auto &edge : adjacencyList[currentVertex])
         {
             // 0 zerocheck beaware
-            if (isVisited[edge.first] == 0 && edge.first != 0)
+            if (isVisited[edge.first] == 0)
             {
                 DFS_helper(edge.first, isVisited);
             }
@@ -91,6 +91,6 @@ int main()
     testGraph.AddEdge(3, 1, 6);
     testGraph.AddEdge(4, 1, 9);
 
-    testGraph.DFS(1);
+    testGraph.DFS(3);
     return 0;
 }
