@@ -136,6 +136,9 @@ public:
         unordered_set<string> vals;
         Node *prevNode = this->start;
         Node *presentNode = prevNode->next;
+
+        vals.insert(prevNode->value);
+
         // delete while travesing on mono direction
         while (prevNode != nullptr && prevNode->next != nullptr)
         {
@@ -146,6 +149,7 @@ public:
                 prevNode->next = presentNode->next;
                 delete presentNode;
                 presentNode = prevNode->next;
+                length--;
             }
             else
             {
@@ -186,12 +190,15 @@ public:
         }
         Node *first = start;
         Node *second = start->next;
-        while (second->next != nullptr && first->next != nullptr)
+        while (second != nullptr && first != nullptr)
         {
             swap(first->value, second->value);
             // swap logic here
             first = first->next;
-            second = second->next;
+            if (first != nullptr)
+            {
+                second = first->next;
+            }
         }
     }
 
@@ -208,7 +215,7 @@ public:
 
         start = second;
 
-        while (second->next != nullptr && first->next != nullptr)
+        while (first != nullptr && second != nullptr)
         {
             // swap logic here
             first->next = second->next;
@@ -225,10 +232,6 @@ public:
             {
                 second = first->next;
             }
-            else
-            {
-                second = nullptr;
-            }
         }
     }
 
@@ -240,7 +243,7 @@ public:
         /**
          * right->next will be unchanged
          */
-        tempNode->next = left->next; // previous right Node
+        tempNode->next = left->next;
         left->next = tempNode;
     }
 
@@ -253,7 +256,7 @@ public:
         // find half
         Node *slow = start;
         Node *fast = start;
-        while (slow->next != nullptr && fast->next->next != nullptr)
+        while (fast->next != nullptr && fast->next->next != nullptr)
         {
             slow = slow->next;
             fast = fast->next->next;
@@ -273,12 +276,15 @@ public:
 
         // inserting betweeen
         Node *left = start;
-        while (left != nullptr && left->next != nullptr && !lastHalf.empty())
+        while (left != nullptr && !lastHalf.empty())
         {
-            insertBetweenHelper(left, left->next, lastHalf.top());
-            left = left->next;
-            right = right->next;
+            Node *topNode = lastHalf.top();
             lastHalf.pop();
+
+            Node *nextLeft = left->next;
+            left->next = topNode;
+            topNode->next = nextLeft;
+            left = nextLeft;
         }
     }
 };
@@ -304,6 +310,9 @@ int main()
     linkedlist.printList();
     cout << "\n After swapping again \n";
     linkedlist.swinging();
+    linkedlist.printList();
+    cout << "\n After restructuring \n";
+    linkedlist.restructuring();
     linkedlist.printList();
     return 0;
 }

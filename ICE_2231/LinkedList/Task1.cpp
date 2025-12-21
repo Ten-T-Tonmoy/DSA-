@@ -1,239 +1,188 @@
 #include <iostream>
-#include <unordered_set>
-#include <stack>
-
 using namespace std;
 
 class Node
 {
 public:
-    string value;
-    Node *next;
+    int key;
+    Node *left;
+    Node *right;
 
-    Node(string val)
+    Node(int val)
     {
-        this->value = val;
-        this->next = NULL;
+        key = val;
+        left = right = NULL;
     }
 };
 
-class List
+class Tree
 {
+    Node *root;
+
+    Node *insertNode(Node *node, int key)
+    {
+        if (node == NULL)
+            return new Node(key);
+        if (key < node->key)
+            node->left = insertNode(node->left, key);
+        else
+            node->right = insertNode(node->right, key);
+        return node;
+    }
+
+    void preorderTrav(Node *node)
+    {
+        if (node == NULL)
+            return;
+        cout << node->key << " ";
+        preorderTrav(node->left);
+        preorderTrav(node->right);
+    }
+
+    void inorderTrav(Node *node)
+    {
+        if (node == NULL)
+            return;
+        inorderTrav(node->left);
+        cout << node->key << " ";
+        inorderTrav(node->right);
+    }
+
+    void postorderTrav(Node *node)
+    {
+        if (node == NULL)
+            return;
+        postorderTrav(node->left);
+        postorderTrav(node->right);
+        cout << node->key << " ";
+    }
+
+    bool searchNode(Node *node, int key)
+    {
+        if (node == NULL)
+            return false;
+        if (node->key == key)
+            return true;
+        if (key < node->key)
+            return searchNode(node->left, key);
+        else
+            return searchNode(node->right, key);
+    }
+
+    int pathLen(Node *node, int depth)
+    {
+        if (node == NULL)
+            return 0;
+        return depth + pathLen(node->left, depth + 1) + pathLen(node->right, depth + 1);
+    }
 
 public:
-    Node *start;
-    Node *end;
-    int length = 0;
-
-    string value;
-
-    List()
+    Tree()
     {
-        start = end = nullptr;
-        length = 0;
+        root = NULL;
     }
 
-    //---------------------inserting at specific position--------------------
-
-    void insertAt(int pos, string val)
+    void insert(int key)
     {
-        // after that position will be inserted
-        Node *tempNode = start;
-        Node *newNode = new Node(val);
-
-        if (pos == 0)
-        {
-            newNode->next = start->next;
-            start->next = newNode;
-            return;
-        }
-        while (tempNode->next != nullptr && pos > 0)
-        {
-            pos--;
-            tempNode = tempNode->next;
-        }
-        newNode->next = tempNode->next;
-        tempNode->next = newNode;
-
-        length++;
+        root = insertNode(root, key);
     }
 
-    //----------------------- inserting at front ------------------------
-
-    void push_front(string val)
+    void preorder()
     {
-        Node *tempNode = new Node(val);
-        if (start == nullptr)
-        {
-            start = end = tempNode;
-        }
+        preorderTrav(root);
+        cout << endl;
+    }
+
+    void inorder()
+    {
+        inorderTrav(root);
+        cout << endl;
+    }
+
+    void postorder()
+    {
+        postorderTrav(root);
+        cout << endl;
+    }
+
+    void search(int key)
+    {
+        if (searchNode(root, key))
+            cout << "Yes" << endl;
         else
-        {
-            tempNode->next = start;
-            this->start = tempNode;
-        }
-        length++;
+            cout << "No" << endl;
     }
 
-    // ----------------------inserting in the end-----------------------------------
-
-    void push_back(string val)
+    void printPathLength()
     {
-        Node *tempNode = new Node(val);
-        if (start == nullptr)
-        {
-            start = end = tempNode;
-        }
-        else
-        {
-            // reverse than push front cuase it wont be reverse direction
-            // this->end = tempNode;
-            // tempNode->next = this->end;
-
-            this->end->next = tempNode;
-            this->end = tempNode;
-        }
-        length++;
-    }
-
-    //------------------display the contents----------------------------
-
-    void printList()
-    {
-        Node *tempNode = start;
-        cout << "\n Value of the linked list are : \n";
-        cout << "(start)";
-        while (tempNode != nullptr)
-        {
-            cout << " -> " << tempNode->value;
-            tempNode = tempNode->next;
-        }
-        cout << " -> (end)\n";
-        cout << "\n";
-    }
-
-    //------------------length of the LL-----------------------------------
-
-    void size()
-    {
-        cout << "The length of the linked list is : " << this->length << endl;
-    }
-
-    int isFound(string val)
-    {
-        int idx = 0;
-        if (val != "")
-        {
-            Node *tempNode = start;
-            while (tempNode != nullptr)
-            {
-                idx++;
-                if (val == tempNode->value)
-                    return true;
-                tempNode = tempNode->next;
-            }
-        }
-        return -1;
-    }
-
-    //-------------------------- delete node from LL--------------------------
-
-    void deleteNode(string val)
-    {
-        int idx = this->isFound(val);
-        if (idx < 0)
-        {
-            cout << "Value not found ! invalid credentials \n";
-            return;
-        }
-        Node *tempNode = start;
-        while (tempNode->next->next != nullptr)
-        {
-            if (tempNode->next->value == val)
-                break;
-            tempNode = tempNode->next;
-        }
-        Node *oldPos = tempNode->next;
-        tempNode->next = tempNode->next->next;
-        delete oldPos;
+        cout << "Path Length: " << pathLen(root, 0) << endl;
     }
 };
 
 int main()
 {
-    List linkedlist;
-    /**
-     *
-     linkedlist.push_front("first");
-     linkedlist.insertAt(0, "fifth");
-     linkedlist.push_back("second");
-     linkedlist.push_front("third");
-     linkedlist.insertAt(1, "fourth");
-     linkedlist.insertAt(0, "fifth");
-     linkedlist.push_front("second");
-     linkedlist.push_front("fifth");
-     linkedlist.push_back("second");
-     linkedlist.printList();
-     linkedlist.deleteNode("third");
-     cout << "\n After deleting :\n";
-     linkedlist.printList();
-     */
-
+    Tree tree;
     bool isRunning = true;
+
     while (isRunning)
     {
         cout << "\n";
         cout << "=========================================\n";
-        cout << "|         Linked List Operations        |\n";
+        cout << "|        Binary Search Tree Menu         |\n";
         cout << "=========================================\n";
-        cout << "|  1 | Insert at end                    |\n";
-        cout << "|  2 | Insert at beginning              |\n";
-        cout << "|  3 | Insert at specific position      |\n";
-        cout << "|  4 | Delete element by value          |\n";
-        cout << "|  5 | Length of the Linked List        |\n";
-        cout << "|  6 | Display the Linked List          |\n";
+        cout << "|  1 | Insert a key                     |\n";
+        cout << "|  2 | Preorder Traversal               |\n";
+        cout << "|  3 | Inorder Traversal                |\n";
+        cout << "|  4 | Postorder Traversal              |\n";
+        cout << "|  5 | Search a key                     |\n";
+        cout << "|  6 | Path Length of Tree              |\n";
         cout << "|  7 | ************ Exit ************** |\n";
         cout << "=========================================\n";
         cout << "Choose an option: ";
-        int opt, tempPos;
-        string temp;
+
+        int opt, key;
         cin >> opt;
+
         switch (opt)
         {
         case 1:
-            cout << "Enter the string value: ";
-            cin >> temp;
-            linkedlist.push_back(temp);
+            cout << "Enter key to insert: ";
+            cin >> key;
+            tree.insert(key);
             break;
+
         case 2:
-            cout << "Enter the string value: ";
-            cin >> temp;
-            linkedlist.push_front(temp);
+            cout << "PreOrder traversal:";
+            tree.preorder();
             break;
+
         case 3:
-            cout << "Enter the string value: ";
-            cin >> temp;
-            cout << "Enter the position you want to insert at: ";
-            cin >> tempPos;
-            linkedlist.insertAt(tempPos, temp);
+            cout << "InOrder traversal:";
+            tree.inorder();
             break;
+
         case 4:
-            cout << "Enter the string value you want to Delete: ";
-            cin >> temp;
-            linkedlist.deleteNode(temp);
+            cout << "PostOrder traversal:";
+            tree.postorder();
             break;
+
         case 5:
-            linkedlist.size();
+            cout << "Enter key to search: ";
+            cin >> key;
+            tree.search(key);
             break;
+
         case 6:
-            linkedlist.printList();
+            cout << "Path length: ";
+            tree.printPathLength();
             break;
+
         case 7:
             isRunning = false;
             break;
 
         default:
-            break;
+            cout << "Invalid option" << endl;
         }
     }
 

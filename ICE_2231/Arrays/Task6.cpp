@@ -7,8 +7,8 @@ void printArray(int m, int n, int *array);
 void sortRowsOfArray(int m, int n, int *array, int tagetRow);
 // void searchWithinArray(int m,int n,int *array,int target);
 void mergeTwoArrays(int m, int n, int row2, int col2, int *arr1, int *arr2);
-void sortRowsByColValues(int *arr,int rows,int cols,int targetCol){
-    
+void sortRowsByColValues(int *arr, int rows, int cols, int targetCol)
+{
 }
 int main()
 {

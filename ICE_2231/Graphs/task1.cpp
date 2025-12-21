@@ -1,176 +1,151 @@
 #include <iostream>
-
 using namespace std;
 
 class Node
 {
 public:
+    int key;
     Node *left;
     Node *right;
-    int data;
+
     Node(int val)
     {
-        this->left = nullptr;
-        this->right = nullptr;
-        this->data = val;
+        key = val;
+        left = right = NULL;
     }
 };
 
-class BinaryTree
+class Tree
 {
-private:
-    //----------------------------insert helper-------------------------------
-    Node *insertHelper(Node *node, int val)
+    Node *root;
+
+    Node *insertNode(Node *node, int key)
     {
-        if (node == nullptr)
-            return new Node(val);
-
-        if (val < node->data)
-        {
-            node->left = insertHelper(node->left, val);
-        }
-        else if (val > node->data)
-        {
-            node->right = insertHelper(node->right, val);
-        }
-
-        // returning cause of total reconstruction!
+        if (node == NULL)
+            return new Node(key);
+        if (key < node->key)
+            node->left = insertNode(node->left, key);
+        else
+            node->right = insertNode(node->right, key);
         return node;
     }
-    //-------------------------search helper------------------------------------
 
-    Node *searchHelper(Node *node, int key)
+    void preorderTrav(Node *node)
     {
-        if (!node || node->data == key)
-            return node;
-
-        if (key > node->data)
-            return searchHelper(node->right, key);
-        else
-            return searchHelper(node->left, key);
+        if (node == NULL)
+            return;
+        cout << node->key << " ";
+        preorderTrav(node->left);
+        preorderTrav(node->right);
     }
 
-    //-------------------------search helper------------------------------------
-    int pathLengthHelper(Node *node, int key)
+    void inorderTrav(Node *node)
     {
-        if (!node)
-            return 0;
-        if (node->data == key)
-            return node->data;
+        if (node == NULL)
+            return;
+        inorderTrav(node->left);
+        cout << node->key << " ";
+        inorderTrav(node->right);
+    }
 
-        if (key > node->data)
-        {
-            int leftPath = pathLengthHelper(node->right, key);
-            if (leftPath == 0)
-                return 0;
-            return node->data + leftPath;
-        }
+    void postorderTrav(Node *node)
+    {
+        if (node == NULL)
+            return;
+        postorderTrav(node->left);
+        postorderTrav(node->right);
+        cout << node->key << " ";
+    }
+
+    bool searchNode(Node *node, int key)
+    {
+        if (node == NULL)
+            return false;
+        if (node->key == key)
+            return true;
+        if (key < node->key)
+            return searchNode(node->left, key);
         else
-        {
-            int rightPath = pathLengthHelper(node->left, key);
-            if (rightPath == 0)
-                return 0;
-            return node->data + rightPath;
-        }
+            return searchNode(node->right, key);
+    }
+
+    int pathLen(Node *node, int depth)
+    {
+        if (node == NULL)
+            return 0;
+        return depth + pathLen(node->left, depth + 1) + pathLen(node->right, depth + 1);
     }
 
 public:
-    Node *root;
-
-    BinaryTree()
+    Tree()
     {
-        this->root = nullptr;
+        root = NULL;
     }
 
-    //---------------------insert-------------------------------
-    void insert(int val)
+    void insert(int key)
     {
-        root = insertHelper(root, val);
+        root = insertNode(root, key);
     }
 
-    //------------------in order traversal ----------------------------
-
-    void inorder(Node *node)
+    void preorder()
     {
-        if (!node)
-            return;
-        inorder(node->left);
-        cout << node->data << " ";
-        inorder(node->right);
-    }
-    void inorderTraversal()
-    {
-        cout << "Inorder: ";
-        inorder(root);
+        preorderTrav(root);
         cout << endl;
     }
 
-    //------------------pre order traversal ----------------------------
-
-    void preorder(Node *node)
+    void inorder()
     {
-        if (!node)
-            return;
-        cout << node->data << " ";
-        preorder(node->left);
-        preorder(node->right);
-    }
-    void preorderTraversal()
-    {
-        cout << "Preorder: ";
-        preorder(root);
-        cout << endl;
-    }
-    //------------------post order traversal ----------------------------
-
-    void postorder(Node *node)
-    {
-        if (!node)
-            return;
-        postorder(node->left);
-        postorder(node->right);
-        cout << node->data << " ";
-    }
-
-    void postorderTraversal()
-    {
-        cout << "Postorder: ";
-        postorder(root);
+        inorderTrav(root);
         cout << endl;
     }
 
-    //-------------------search------------------------
+    void postorder()
+    {
+        postorderTrav(root);
+        cout << endl;
+    }
 
     void search(int key)
     {
-        Node *res = searchHelper(root, key);
-        if (res)
-            cout << "Value has been found " << res->data << endl;
+        if (searchNode(root, key))
+            cout << "Yes" << endl;
         else
-            cout << "Not found" << endl;
+            cout << "No" << endl;
     }
 
-    //-----------------path Length-----------------------------
-    void pathLength(int key)
+    void printPathLength()
     {
-        int total = pathLengthHelper(root, key);
-        if (total == 0)
-            std::cout << "Key not found.\n";
-        else
-            std::cout << "Path length to key: " << total << "\n";
+        cout << pathLen(root, 0) << endl;
     }
 };
 
 int main()
 {
+    Tree t;
+    int n;
+    cin >> n;
 
-    BinaryTree bst;
-    bst.insert(4);
-    bst.insert(3);
-    bst.insert(5);
-    bst.insert(2);
-    bst.inorderTraversal();
-    bst.search(3);
-    bst.pathLength(3);
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        t.insert(x);
+    }
+
+    t.preorder();
+    t.inorder();
+    t.postorder();
+
+    int key;
+    cin >> key;
+    t.search(key);
+
+    int newKey;
+    cin >> newKey;
+    t.insert(newKey);
+
+    t.inorder();
+    t.printPathLength();
+
     return 0;
 }
