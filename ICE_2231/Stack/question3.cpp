@@ -4,6 +4,17 @@
 #include <string>
 using namespace std;
 
+/*
+    infix=>two stacks
+        values
+        ops
+
+    postfix=>one stack
+        op found pop stack
+
+    prefix =>right to left
+        one stack
+*/
 int applyOp(int a, int b, char op)
 {
     if (op == '+')
@@ -143,6 +154,7 @@ int evaluate(string expr)
         return solvePostfix(expr);
     else
         return solveInfix(expr);
+    // return ezInFixSolver(expr);
 }
 
 int main()

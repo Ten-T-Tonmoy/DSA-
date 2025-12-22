@@ -18,6 +18,13 @@ public:
 class Tree
 {
     Node *root;
+    //  5
+    //      7
+
+    // void insert(int key)
+    // {
+    //     root = insertNode(root, key);
+    // }
 
     Node *insertNode(Node *node, int key)
     {

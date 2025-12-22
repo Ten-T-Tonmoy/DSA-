@@ -9,6 +9,16 @@ bool isOperator(char c)
     return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
+/*
+Scan from right to left (because it’s prefix).
+
+Operands → push onto stack.
+
+Operators → pop two operands a and b from stack,
+ combine as (a operator b), then push back.
+
+Repeat until the whole expression is processed
+*/
 string prefixToInfix(string exp)
 {
     stack<string> s;
@@ -29,6 +39,15 @@ string prefixToInfix(string exp)
     }
     return s.top();
 }
+/*
+Scan from left to right (because it’s postfix).
+
+Operands → push onto stack.
+
+Operators → pop two operands a
+(first popped is b, second popped is a)
+ → combine (a operator b) → push back
+*/
 
 string postfixToInfix(string exp)
 {
@@ -50,6 +69,15 @@ string postfixToInfix(string exp)
     }
     return s.top();
 }
+
+/*
+Scan right to left (prefix).
+
+Operands → push.
+
+Operators → pop two operands 
+a & b → combine a + b + operator → push back.
+*/
 
 string prefixToPostfix(string exp)
 {

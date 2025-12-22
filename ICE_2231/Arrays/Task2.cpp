@@ -19,6 +19,7 @@ void bubbleSort(vector<int> arr)
     int flag;
     for (int i = 0; i < arr.size() - 1; i++)
     {
+        //21  6 1 13 52  55
         flag = 0;
         for (int j = 0; j < arr.size() - 1 - i; j++)
         {
@@ -58,6 +59,8 @@ void insertionSort(vector<int> arr)
     // Builds a sorted array one element at a
     // time by inserting elements at the correct position.
     // for sorting linked list its good
+
+    // 21 25 24 225 26 45 88 62 11 26
     int n = arr.size();
     for (int i = 1; i < n; i++)
     {
@@ -84,11 +87,13 @@ int main()
     int n;
     cin >> n;
     cout << "Enter elements : ";
+    // 4 3 2 1 0
     while (n--)
     {
         int a;
         cin >> a;
         array.push_back(a);
+        // a[i]=input;
     }
     bool isRunning = true;
     while (isRunning)

@@ -1,15 +1,6 @@
 #include <iostream>
 using namespace std;
 
-// Pick a pivot (here: last element arr[high])
-
-// Partition the array (last el)
-// → elements < pivot go left
-// → elements > pivot go right
-// → pivot goes to its final sorted position
-
-// Recursively apply the same logic on left & right part
-
 int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
@@ -22,7 +13,9 @@ int partition(int arr[], int low, int high)
             swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i + 1], arr[high]);
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
     return i + 1;
 }
 
@@ -45,14 +38,8 @@ void printArray(int arr[], int n)
 
 int main()
 {
-    int n;
-    cout << "Enter array size:";
-    cin >> n;
-    int arr[100];
-    cout << "Enter elements:";
-    for (int i = 0; i < n; i++)
-        cin >> arr[i];
-
+    int n = 10;
+    int arr[n] = {2, 5, 2, 6, 3, 84, 32, 35, 3, 6};
     cout << "Before sorting: ";
     printArray(arr, n);
 

@@ -3,6 +3,10 @@ using namespace std;
 
 vector<int> mergeArraysSorted(vector<int> &a, vector<int> &b)
 {
+
+    // 1 3 5  7
+    // 2 4 6 8 10 12 
+    //
     vector<int> res;
     int i = 0, j = 0;
     int size1 = a.size(), size2 = b.size();
@@ -54,3 +58,7 @@ int main()
     cin.tie(NULL);
     return 0;
 }
+
+// 1 3 5  7
+// 2 4 6 8
+//

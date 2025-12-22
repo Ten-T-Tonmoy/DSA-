@@ -97,9 +97,9 @@ int main()
      * 1 2 3
      * 2 5 6
      *
-     * 2 5
-     * 2 8
-     * 0 3
+     * 2 5 4
+     * 2 8 6
+     * 0 3 3
      */
 
     cout << "Enter col size of array2: ";

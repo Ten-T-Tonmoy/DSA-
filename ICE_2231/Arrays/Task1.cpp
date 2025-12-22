@@ -7,7 +7,9 @@ void fillArray(int arr[], int size)
 {
     for (int i = 0; i < size; i++)
     {
-        arr[i] = rand() % 100;
+        int inp;
+        cin>> inp;
+        arr[i] =inp;
     }
 }
 
@@ -33,6 +35,7 @@ int sumArray(int arr[], int size)
 
 int maxArray(int arr[], int size)
 {
+    // 2 4 6 4 2 5 3 2 3 
     int max = arr[0];
     for (int i = 1; i < size; i++)
     {

@@ -202,6 +202,7 @@ public:
         }
     }
 
+    // is the answer !?
     void swinging()
     {
         if (this->length < 2)
